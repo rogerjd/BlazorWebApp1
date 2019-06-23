@@ -1,0 +1,15 @@
+﻿@page "/tst"
+
+<h1>Tst</h1>
+
+
+<button class="btn btn-primary" @onclick="@IncrementCount">Click me</button>
+
+@code {
+    int currentCount = 0;
+
+    void IncrementCount()
+    {
+        currentCount++;
+    }
+}
