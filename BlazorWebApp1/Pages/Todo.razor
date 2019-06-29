@@ -5,16 +5,24 @@
 <ul>
     @foreach (var todo in todos)
     {
-        <input type="checkbox" @bind="@todo.IsDone"/>
+    <li>
+        <input type="checkbox" @bind="@todo.IsDone" />
         <input @bind="@todo.Title" />
+    </li>
     }
 </ul>
 
-<input placeholder="Something todo" @bind="@newTodo"/>
+<input placeholder="Something todo" @bind="@newTodo" />
 <button @onclick="@AddTodo">Add todo</button>
 
-@code { 
-private List<TodoItem> todos = new List<TodoItem>();
+@DynamicFragment
+
+@code {
+private string dynamicContent = "This is a long text...";
+
+private List<TodoItem>
+    todos = new List<TodoItem>
+        ();
 private string newTodo;
 
 private void AddTodo()
@@ -26,4 +34,17 @@ private void AddTodo()
     }
 }
 
+protected override void OnInit()
+{
+    DynamicFragment = builder => 
+    {
+        dynamicContent = dynamicContent.Replace("long", "long, long");
+        builder.OpenElement(1, "p");
+        builder.AddContent(2, dynamicContent);
+        builder.CloseElement();
+    };
 }
+
+//private Microsoft.AspNetCore.Blazor.RenderFragment DynamicFragment
+private RenderFragment DynamicFragment;
+ }
