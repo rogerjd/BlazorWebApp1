@@ -13,7 +13,7 @@ namespace ToDoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ToDoController: ControllerBase
+    public class ToDoController : ControllerBase
     {
         private readonly TodoContext _context;
 
@@ -34,7 +34,7 @@ namespace ToDoAPI.Controllers
             return await _context.ToDoItems.ToListAsync();
         }
 
-        [HttpGet("x/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ToDoItem>> GetTodoItem(long id)
         {
             var todoItem = await _context.ToDoItems.FindAsync(id);
@@ -46,6 +46,12 @@ namespace ToDoAPI.Controllers
             return todoItem;
         }
 
+        [HttpGet("count")]
+        public ActionResult<int> GetCount()
+        {
+            return 4;
+        }
+
         [HttpPost]
         public async Task<ActionResult<ToDoItem>> PostTodoItem(ToDoItem item)
         {
@@ -54,5 +60,32 @@ namespace ToDoAPI.Controllers
             return CreatedAtAction(nameof(GetTodoItem), new { id = item.id }, item);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTodoItem(long id, ToDoItem item)
+        {
+            if (id != item.id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTodoItem(long id)
+        {
+            var todoItem = await _context.ToDoItems.FindAsync(id);
+            if (todoItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.ToDoItems.Remove(todoItem);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
