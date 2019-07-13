@@ -47,7 +47,7 @@ namespace ToDoAPI
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            //app.UseMvc(); //7/13/19 this caused error, i think we are now using blazor routing
 
             app.UseRouting();
 
