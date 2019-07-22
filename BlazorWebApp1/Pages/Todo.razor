@@ -12,13 +12,16 @@
     }
 </ul>
 
-<input placeholder="Something todo" @bind="@newTodo" />
+<input placeholder="Something todo" @bind="@newTodo" @onkeypress="@(e => TxtKeyPress(e))" />
 <button @onclick="@AddTodo">Add todo</button>
 
 @DynamicFragment
 
+@tst
+
 @code {
 private string dynamicContent = "This is a long text...";
+private string tst;
 
 private IList<TodoItem>
     todos = new List<TodoItem>
@@ -34,9 +37,17 @@ private void AddTodo()
     }
 }
 
+private void TxtKeyPress(UIKeyboardEventArgs args)
+{
+    if (args.Key == "Enter")
+    {
+        tst += "Enter";
+    }
+}
+
 protected override void OnInit()
 {
-    DynamicFragment = builder => 
+    DynamicFragment = builder =>
     {
         dynamicContent = dynamicContent.Replace("long", "long, long");
         builder.OpenElement(1, "p");

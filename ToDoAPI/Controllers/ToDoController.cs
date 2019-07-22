@@ -4,20 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ToDoAPI.Models;
 
 namespace ToDoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ToDoController : ControllerBase
+    public class TodoController : ControllerBase
     {
         private readonly TodoContext _context;
 
-        public ToDoController(TodoContext context)
+        public TodoController(TodoContext context)
         {
             _context = context;
 
