@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,14 @@ namespace ToDoAPI.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
            return new string[] { "value1", "value2" };
+        }
+
+        [HttpGet("tst")]
+        public ActionResult<DataTable> GetTst()
+        {
+            DataTable dt = new DataTable();
+            return new JsonResult(dt);
+            //ok: return new string[] { "tst1", "tst2" };
         }
 
         // GET api/values/5
