@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ToDoAPI.DB;
 using ToDoAPI.Models;
 using ToDoAPI.Models.Emp;
@@ -27,9 +28,12 @@ namespace ToDoAPI.Controllers
     {
         //private readonly TodoContext _context;
         private DataTable tbl;
+        private AppSettings appSettings { get; set; }
 
-        public EmpsController(TodoContext context)
+        public EmpsController(IOptions<AppSettings> settings)
         {
+            appSettings = settings.Value;
+
             tbl = new DataTable();
             tbl.Columns.Add("num");
             tbl.Columns.Add("name");
