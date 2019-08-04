@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using ToDoAPI.DB;
 using ToDoAPI.Models;
 using ToDoAPI.Models.Emp;
@@ -44,13 +45,20 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Emp>> GetEmp()
+        public ActionResult<string> GetEmp()
         {
             DataTable dt = new PR_Mgr().GetEmp();
-            List<Emp> l = DBUtil.BindList<Emp>(dt);
-            return l;
-            //ok w/string: return "emp wip";
+            string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return json;
         }
+
+        //public ActionResult<IEnumerable<Emp>> GetEmp()
+        //{
+        //    DataTable dt = new PR_Mgr().GetEmp();
+        //    List<Emp> l = DBUtil.BindList<Emp>(dt);
+        //    return l;
+        //    //ok w/string: return "emp wip";
+        //}
 
 
         //[HttpGet]

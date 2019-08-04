@@ -1,14 +1,18 @@
-﻿@page "/emps"
+﻿@page "/employees"
 @inject HttpClient Http
 
 <h1>Employees</h1>
 
-@if (forecasts == null)
+@if (res == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    @res; 
+
+    
+@*
     <table class="table">
         <thead>
             <tr>
@@ -30,14 +34,21 @@ else
             }
         </tbody>
     </table>
+*@
 }
+
+@res = "test";
 
 @code {
     WeatherForecast[] forecasts;
+    string res = "abc";
 
     protected override async Task OnInitAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+//        res = "test";
+        res = await Http.GetStringAsync("https://localhost:44315/api/emps");
+        Console.WriteLine(res);
+        //forecasts = await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 
     class WeatherForecast
