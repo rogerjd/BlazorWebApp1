@@ -37,17 +37,30 @@ else
 *@
 }
 
-@res = "test";
+@res
 
 @code {
     WeatherForecast[] forecasts;
-    string res = "abc";
+    string res;
 
     protected override async Task OnInitAsync()
     {
-//        res = "test";
-        res = await Http.GetStringAsync("https://localhost:44315/api/emps");
+        //        res = "test";
+        System.Diagnostics.Debug.WriteLine("before: debug test");
+        Console.WriteLine("before ***********");
+        //        res = await Http.GetStringAsync("https://www.nytimes.com/");
+
+        try
+        {
+            res = await Http.GetStringAsync("https://localhost:44315/api/emps");
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        System.Diagnostics.Debug.WriteLine("after: debug test");
         Console.WriteLine(res);
+        StateHasChanged();
         //forecasts = await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 
