@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -44,6 +45,7 @@ namespace ToDoAPI.Controllers
             tbl.Rows.Add(3, "ghi");
         }
 
+        //[EnableCors]
         [HttpGet]
         public ActionResult<string> GetEmp()
         {

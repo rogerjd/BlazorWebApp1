@@ -28,14 +28,17 @@ namespace ToDoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                 builder => builder.AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader());
+            });
             services.AddControllers();
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddCors(options => options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +54,8 @@ namespace ToDoAPI
                 app.UseHsts();
             }
 
+            app.UseCors("CorsPolicy");
+
             app.UseHttpsRedirection();
             //app.UseMvc(); //7/13/19 this caused error, i think we are now using blazor routing
 
@@ -62,8 +67,6 @@ namespace ToDoAPI
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors("CorsPolicy");
         }
     }
 }
