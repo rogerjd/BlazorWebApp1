@@ -49,7 +49,7 @@ namespace ToDoAPI.Controllers
         [HttpGet]
         public ActionResult<string> GetEmp()
         {
-            return "test abc";
+//            return "test abc";
 
             DataTable dt = new PR_Mgr().GetEmp();
             string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
