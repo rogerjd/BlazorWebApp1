@@ -1,5 +1,6 @@
 ﻿@page "/employees"
 @inject HttpClient Http
+@using Newtonsoft.Json
 
 <h1>Employees</h1>
 
@@ -9,10 +10,31 @@
 }
 else
 {
-    @res; 
 
-    
-@*
+
+    @*
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Temp. (C)</th>
+                    <th>Temp. (F)</th>
+                    <th>Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var forecast in forecasts)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    *@
     <table class="table">
         <thead>
             <tr>
@@ -23,23 +45,26 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var emp in emps)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@emp.FirstName</td>
+                    <td>@emp.LastName</td>
                 </tr>
             }
         </tbody>
     </table>
-*@
 }
 
-@res
-
 @code {
+    class emp
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    List<emp> emps;
+
     WeatherForecast[] forecasts;
     string res;
 
@@ -48,19 +73,21 @@ else
         //        res = "test";
         System.Diagnostics.Debug.WriteLine("before: debug test");
         Console.WriteLine("before ***********");
-        //        res = await Http.GetStringAsync("https://www.nytimes.com/");
+        //CORS err: res = await Http.GetStringAsync("https://www.nytimes.com/");
 
         try
         {
             res = await Http.GetStringAsync("https://localhost:44315/api/emps");
+            emps = JsonConvert.DeserializeObject<List<emp>>(res);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
         System.Diagnostics.Debug.WriteLine("after: debug test");
-        Console.WriteLine(res);
-        StateHasChanged();
+        Console.WriteLine(string.Join("\n", emps));
+        //        Console.WriteLine(res);
+        //StateHasChanged();
         //forecasts = await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 

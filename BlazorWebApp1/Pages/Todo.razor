@@ -5,57 +5,68 @@
 <ul>
     @foreach (var todo in todos)
     {
-    <li>
-        <input type="checkbox" @bind="@todo.IsDone" />
-        <input @bind="@todo.Title" />
-    </li>
+        <li>
+            <input type="checkbox" @bind="@todo.IsDone" />
+            <input @bind="@todo.Title" />
+        </li>
     }
 </ul>
 
 <input placeholder="Something todo" @bind="@newTodo" @onkeypress="@(e => TxtKeyPress(e))" />
 <button @onclick="@AddTodo">Add todo</button>
+<button @onclick="@RemvTodo">Remove todo</button>
 
-@DynamicFragment
+@* DynamicFragment *@
 
 @tst
 
 @code {
-private string dynamicContent = "This is a long text...";
-private string tst;
+    private string dynamicContent = "This is a long text...";
+    private string tst;
 
-private IList<TodoItem>
-    todos = new List<TodoItem>
-        ();
-private string newTodo;
+    private IList<TodoItem>
+        todos = new List<TodoItem>
+            ();
+    private string newTodo;
 
-private void AddTodo()
-{
-    if (!string.IsNullOrWhiteSpace(newTodo))
+    private void AddTodo()
     {
-        todos.Add(new TodoItem { Title = newTodo });
-        newTodo = string.Empty;
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Title = newTodo });
+            newTodo = string.Empty;
+        }
     }
-}
 
-private void TxtKeyPress(UIKeyboardEventArgs args)
-{
-    if (args.Key == "Enter")
+    private void RemvTodo()
     {
-        tst += "Enter";
+        if (todos.Count > 0)
+        {
+            todos.RemoveAt(todos.Count - 1);
+        }
     }
-}
 
-protected override void OnInit()
-{
-    DynamicFragment = builder =>
+    private void TxtKeyPress(UIKeyboardEventArgs args)
     {
-        dynamicContent = dynamicContent.Replace("long", "long, long");
-        builder.OpenElement(1, "p");
-        builder.AddContent(2, dynamicContent);
-        builder.CloseElement();
-    };
-}
+        if (args.Key == "Enter")
+        {
+            tst += "Enter";
+        }
+    }
 
-//private Microsoft.AspNetCore.Blazor.RenderFragment DynamicFragment
-private RenderFragment DynamicFragment;
- }
+    protected override void OnInit()
+    {
+        @*
+        DynamicFragment = builder =>
+        {
+            dynamicContent = dynamicContent.Replace("long", "long, long");
+            builder.OpenElement(1, "p");
+            builder.AddContent(2, dynamicContent);
+            builder.CloseElement();
+        };
+            *@
+    }
+
+    //private Microsoft.AspNetCore.Blazor.RenderFragment DynamicFragment
+    private RenderFragment DynamicFragment;
+}
