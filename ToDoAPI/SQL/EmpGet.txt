@@ -1,0 +1,8 @@
+CREATE PROCEDURE dbo.EmpGet
+	@EmpID int
+AS
+	SELECT *
+	from Employees
+	where Id = @EmpID
+
+RETURN 0

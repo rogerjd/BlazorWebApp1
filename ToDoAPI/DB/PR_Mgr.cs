@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using ClassLibrary2.Models;
 
 namespace ToDoAPI.DB
 {
@@ -17,6 +18,7 @@ namespace ToDoAPI.DB
         {
             connStr = @"Server=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\ROGER\SOURCE\REPOS\GITHUB.COM\ROGERJD\WINFORMSAPP1\WINFORMSAPP1\BIN\DEBUG\PAYROLL.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             sqlConnection = new SqlConnection(connStr);
+            sqlConnection.Open();
 
             //Microsoft.Extensions.Configuration.IConfiguration.     IConfiguration.GetConnectionString();
         }
@@ -28,6 +30,7 @@ namespace ToDoAPI.DB
             cmd.Connection = sqlConnection;
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(tbl);
+            sqlConnection.Close();
             return tbl;
 
             tbl.Columns.Add("FName");
@@ -36,6 +39,30 @@ namespace ToDoAPI.DB
             tbl.Rows.Add("Joe", "Mklq");
 
             return tbl;
+        }
+
+        public DataTable GetEmpByID(int id)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("EmpGet", sqlConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("EmpID", id);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            sqlConnection.Close();
+            return dt;
+        }
+
+        public int EmpUpdate(Emp emp)
+        {
+            SqlCommand cmd = new SqlCommand("EmpUpdate", sqlConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("ID", emp.ID);
+            cmd.Parameters.AddWithValue("FirstName", emp.FirstName);
+            cmd.Parameters.AddWithValue("LastName", emp.LastName);
+            var n = cmd.ExecuteNonQuery();
+            sqlConnection.Close();
+            return n;
         }
     }
 }

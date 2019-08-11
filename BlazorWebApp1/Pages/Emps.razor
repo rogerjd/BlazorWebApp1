@@ -1,6 +1,7 @@
 ﻿@page "/employees"
 @inject HttpClient Http
 @using Newtonsoft.Json
+@using ClassLibrary2.Models
 
 <h1>Employees</h1>
 
@@ -47,28 +48,28 @@ else
         <tbody>
             @foreach (var emp in emps)
             {
-            <tr>
-                <td>@emp.FirstName</td>
-                <td>@emp.LastName</td>
-                <td hidden="hidden">@emp.Id</td>
-            </tr>
+                <tr>
+                    <td>@emp.FirstName</td>
+                    <td>@emp.LastName</td>
+                    <td hidden="hidden">@emp.ID</td>
+                </tr>
             }
         </tbody>
     </table>
 }
 
-@code {
-    class emp
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
+<button @onclick="@EmpGet">Get Emp</button>
+<button @onclick="@EmpUpdt">Update Emp</button>
+@emp.FirstName`
 
-    List<emp> emps;
+
+@code {
+    List<Emp> emps;
+    Emp emp = new Emp();
 
     WeatherForecast[] forecasts;
     string res;
+
 
     protected override async Task OnInitAsync()
     {
@@ -80,7 +81,7 @@ else
         try
         {
             res = await Http.GetStringAsync("https://localhost:44315/api/emps");
-            emps = JsonConvert.DeserializeObject<List<emp>>(res);
+            emps = JsonConvert.DeserializeObject<List<Emp>>(res);
         }
         catch (Exception e)
         {
@@ -103,4 +104,22 @@ else
 
         public string Summary { get; set; }
     }
+
+    private async Task EmpGet()
+    {
+        res = await Http.GetStringAsync("https://localhost:44315/api/emps/2");
+        var emps = JsonConvert.DeserializeObject<List<Emp>>(res);
+        emp = emps[0];
+        Console.WriteLine(emp.FirstName);
+        StateHasChanged();
+    }
+
+    private async Task EmpUpdt()
+    {
+        emp.FirstName = "Joe";
+        emp.LastName = "";
+        var res = JsonConvert.SerializeObject(emp);
+        await Http.PutJsonAsync("https://localhost:44315/api/emps/2", res);
+    }
+
 }

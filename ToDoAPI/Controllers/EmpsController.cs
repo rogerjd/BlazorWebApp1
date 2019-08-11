@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using ClassLibrary2.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,16 @@ namespace ToDoAPI.Controllers
             return json;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<string> GetEmpById(int id)
+        {
+            PR_Mgr pm = new PR_Mgr();
+            DataTable dt = pm.GetEmpByID(id);
+            string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return json;
+        }
+
+
         //public ActionResult<IEnumerable<Emp>> GetEmp()
         //{
         //    DataTable dt = new PR_Mgr().GetEmp();  
@@ -63,12 +74,21 @@ namespace ToDoAPI.Controllers
         //    return l;
         //    //ok w/string: return "emp wip";
         //}
-  
+
 
         //[HttpGet]
         //public async DataTable GetTodoItems()
         //{
         //    return tbl;
         //}
+
+        // PUT api/emps/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+            PR_Mgr mgr = new PR_Mgr();
+            Emp emp = JsonConvert.DeserializeObject<Emp>(value);
+            mgr.EmpUpdate(emp);
+        }
     }
 }
