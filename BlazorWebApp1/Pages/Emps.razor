@@ -38,8 +38,8 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
+                <th>First</th>
+                <th>Last</th>
                 <th>Temp. (F)</th>
                 <th>Summary</th>
             </tr>
@@ -47,10 +47,11 @@ else
         <tbody>
             @foreach (var emp in emps)
             {
-                <tr>
-                    <td>@emp.FirstName</td>
-                    <td>@emp.LastName</td>
-                </tr>
+            <tr>
+                <td>@emp.FirstName</td>
+                <td>@emp.LastName</td>
+                <td hidden="hidden">@emp.Id</td>
+            </tr>
             }
         </tbody>
     </table>
@@ -59,6 +60,7 @@ else
 @code {
     class emp
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
