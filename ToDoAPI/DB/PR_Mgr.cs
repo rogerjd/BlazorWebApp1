@@ -23,6 +23,13 @@ namespace ToDoAPI.DB
             //Microsoft.Extensions.Configuration.IConfiguration.     IConfiguration.GetConnectionString();
         }
 
+        private SqlCommand GetSqlCommand(string cmdName)
+        {
+            SqlCommand cmd = new SqlCommand(cmdName, sqlConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            return cmd;
+        }
+
         public DataTable GetEmp()
         {
             DataTable tbl = new DataTable();
@@ -44,8 +51,8 @@ namespace ToDoAPI.DB
         public DataTable GetEmpByID(int id)
         {
             DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand("EmpGet", sqlConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = GetSqlCommand("EmpGet");   // new SqlCommand("EmpGet", sqlConnection);
+            //cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("EmpID", id);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dt);

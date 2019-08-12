@@ -63,7 +63,7 @@ namespace ToDoAPI.Controllers
             PR_Mgr pm = new PR_Mgr();
             DataTable dt = pm.GetEmpByID(id);
             string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
-            return json;
+            return json;  //todo: just return emp?
         }
 
 
