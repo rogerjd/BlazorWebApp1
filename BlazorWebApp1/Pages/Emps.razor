@@ -2,6 +2,7 @@
 @inject HttpClient Http
 @using Newtonsoft.Json
 @using ClassLibrary2.Models
+@using System.Data;
 
 <h1>Employees</h1>
 
@@ -60,18 +61,18 @@ else
 
 <button @onclick="@EmpGet">Get Emp</button>
 <button @onclick="@EmpUpdt">Update Emp</button>
-@emp.FirstName`
+@emp.FirstName
 
 
 @code {
     List<Emp> emps;
     Emp emp = new Emp();
+    DataTable dt = new DataTable();
 
     WeatherForecast[] forecasts;
     string res;
 
-
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         //        res = "test";
         System.Diagnostics.Debug.WriteLine("before: debug test");
@@ -82,6 +83,7 @@ else
         {
             res = await Http.GetStringAsync("https://localhost:44315/api/emps");
             emps = JsonConvert.DeserializeObject<List<Emp>>(res);
+            dt = JsonConvert.DeserializeObject<DataTable>(res);
         }
         catch (Exception e)
         {

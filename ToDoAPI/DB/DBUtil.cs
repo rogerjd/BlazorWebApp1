@@ -11,7 +11,7 @@ namespace ToDoAPI.DB
     {
         public static List<T> BindList<T>(DataTable dt)
         {
-            var fields = typeof(T).GetFields();
+            var fields = typeof(T).GetProperties(BindingFlags.Public); // GetFields();
             List<T> lst = new List<T>();
 
             foreach (DataRow row in dt.Rows)
