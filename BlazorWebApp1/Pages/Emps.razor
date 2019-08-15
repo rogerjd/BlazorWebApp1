@@ -62,6 +62,8 @@ else
 <button @onclick="@EmpGet">Get Emp</button>
 <button @onclick="@EmpUpdt">Update Emp</button>
 @emp.FirstName
+<input placeholder="emp" @bind="@emp.FirstName"/>
+
 
 
 @code {
@@ -118,7 +120,7 @@ else
 
     private async Task EmpUpdt()
     {
-        emp.FirstName = "Joe";
+//        emp.FirstName = "Joe";
         emp.LastName = "";
         var res = JsonConvert.SerializeObject(emp);
         await Http.PutJsonAsync("https://localhost:44315/api/emps/2", res);
