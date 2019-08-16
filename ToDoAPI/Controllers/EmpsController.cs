@@ -48,11 +48,11 @@ namespace ToDoAPI.Controllers
 
         //[EnableCors]
         [HttpGet]
-        public ActionResult<string> GetEmp()
+        public ActionResult<string> GetEmps()
         {
 //            return "test abc";
 
-            DataTable dt = new PR_Mgr().GetEmp();
+            DataTable dt = new PR_Mgr().GetEmps();
             string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
             return json;
         }

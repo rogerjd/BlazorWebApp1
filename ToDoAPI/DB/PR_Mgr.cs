@@ -30,7 +30,7 @@ namespace ToDoAPI.DB
             return cmd;
         }
 
-        public DataTable GetEmp()
+        public DataTable GetEmps()
         {
             DataTable tbl = new DataTable();
             SqlCommand cmd = new SqlCommand("select * from Employees");
