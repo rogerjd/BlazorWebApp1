@@ -63,6 +63,7 @@ else
 <button @onclick="@EmpUpdt">Update Emp</button>
 @emp.FirstName
 <input placeholder="emp" @bind="@emp.FirstName"/>
+<button @onclick="() => emps?.Sort((x, y) => (int)x.FirstName?..CompareTo(y?.FirstName))">Sort Emps</button>
 
 
 
@@ -85,7 +86,8 @@ else
         {
             res = await Http.GetStringAsync("https://localhost:44315/api/emps");
             emps = JsonConvert.DeserializeObject<List<Emp>>(res);
-            dt = JsonConvert.DeserializeObject<DataTable>(res);
+//            dt = JsonConvert.DeserializeObject<DataTable>(res); //this is error, doesnt work, but ok, dont need
+            Console.WriteLine(dt.Rows.Count);
         }
         catch (Exception e)
         {
