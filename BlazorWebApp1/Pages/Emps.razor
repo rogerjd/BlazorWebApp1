@@ -61,7 +61,7 @@ else
 <button @onclick="@EmpUpdt">Update Emp</button>
 @emp.FirstName
 <input placeholder="emp" @bind="@emp.FirstName"/>
-<button @onclick="() => emps?.Sort((x, y) => (int)x.FirstName?.CompareTo(y?.FirstName))">Sort Emps</button>
+<button @onclick="() => emps?.Sort((x, y) => x.FirstName?.CompareTo(y.FirstName) ?? -1)">Sort Emps</button>
 <button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
 <button @onclick="@SortEmps"> sort 3</button>
 <button @onclick="@FindEmps"> Find </button>
@@ -130,7 +130,7 @@ else
 
     private void SortEmps()
     {
-        emps = emps.OrderBy(i => i.FirstName).ToList(); //test
+        emps = emps.OrderBy(i => i.FirstName).ToList();
     }
 
     private void FindEmps()
