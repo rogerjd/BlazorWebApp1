@@ -17,5 +17,7 @@ namespace ClassLibrary2.Models
         */
 
         public string Test { get; set; } = "abc";
+
+        public string FullName { get { return LastName + ", " + FirstName; } }
     }
 }

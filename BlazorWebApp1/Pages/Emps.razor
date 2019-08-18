@@ -48,8 +48,7 @@ else
             @foreach (var emp in emps)
             {
                 <tr>
-                    <td>@emp.FirstName</td>
-                    <td>@emp.LastName</td>
+                    <td>@emp.FullName</td>
                     <td hidden="hidden">@emp.ID</td>
                 </tr>
             }
@@ -130,12 +129,12 @@ else
 
     private void SortEmps()
     {
-        emps = emps.OrderBy(i => i.FirstName).ToList();
+        emps = emps.OrderBy(i => i.FullName, StringComparer.OrdinalIgnoreCase).ToList();
     }
 
     private void FindEmps()
     {
-        emps = origEmps.FindAll(e => e.FirstName?.StartsWith(emp.FirstName) ?? false);
+        emps = origEmps.FindAll(e => e.FullName?.StartsWith(emp.FirstName) ?? false);
         Console.WriteLine("{0} {1}", emps.Count, origEmps.Count);
     }
 
