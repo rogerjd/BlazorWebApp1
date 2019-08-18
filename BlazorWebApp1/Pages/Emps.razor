@@ -64,11 +64,10 @@ else
 <button @onclick="() => emps?.Sort((x, y) => (int)x.FirstName?.CompareTo(y?.FirstName))">Sort Emps</button>
 <button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
 <button @onclick="@SortEmps"> sort 3</button>
-
-
+<button @onclick="@FindEmps"> Find </button>
 
 @code {
-    List<Emp> emps;
+    List<Emp> emps, origEmps;
     Emp emp = new Emp();
     DataTable dt = new DataTable();
 
@@ -86,6 +85,7 @@ else
         {
             res = await Http.GetStringAsync("https://localhost:44315/api/emps");
             emps = JsonConvert.DeserializeObject<List<Emp>>(res);
+            origEmps = emps;
 //            dt = JsonConvert.DeserializeObject<DataTable>(res); //this is error, doesnt work, but ok, dont need
             Console.WriteLine(dt.Rows.Count);
         }
@@ -130,7 +130,13 @@ else
 
     private void SortEmps()
     {
-        emps = emps.OrderByDescending(i => i.FirstName).ToList();
+        emps = emps.OrderBy(i => i.FirstName).ToList();
+    }
+
+    private void FindEmps()
+    {
+        emps = origEmps.FindAll(e => e.FirstName?.StartsWith(emp.FirstName) ?? false);
+        Console.WriteLine("{0} {1}", emps.Count, origEmps.Count);
     }
 
 }
