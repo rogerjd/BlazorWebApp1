@@ -134,7 +134,7 @@ else
 
     private void FindEmps()
     {
-        emps = origEmps.FindAll(e => e.FullName?.StartsWith(emp.FirstName ?? "") ?? false);
+        emps = origEmps.FindAll(e => e.FullName.StartsWith(emp.FirstName ?? ""));
         Console.WriteLine("{0} {1}", emps.Count, origEmps.Count);
     }
 }
