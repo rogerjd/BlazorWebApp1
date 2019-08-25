@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebApp1", "BlazorWebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoAPI", "ToDoAPI\ToDoAPI.csproj", "{2259D86C-E925-4063-8BE9-3B1C4914FFC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary2", "ClassLibrary2\ClassLibrary2.csproj", "{04D4370E-EFA7-4860-9B48-46D4CAFE7587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary2", "ClassLibrary2\ClassLibrary2.csproj", "{04D4370E-EFA7-4860-9B48-46D4CAFE7587}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33F8984A-9BEC-453C-A616-F8C9551F9360}"
+	ProjectSection(SolutionItems) = preProject
+		plan.txt = plan.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
