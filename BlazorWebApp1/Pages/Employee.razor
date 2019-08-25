@@ -1,1 +1,8 @@
-﻿
+﻿@page "/employee/{id}"
+
+<h1> Employee @ID</h1>
+
+@code{
+    [Parameter]
+    public string ID { get; set; }
+}
