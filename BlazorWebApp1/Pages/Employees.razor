@@ -1,9 +1,10 @@
-﻿@layout EmployeesLayout
-@page "/employees"
+﻿@page "/employees"
 @inject HttpClient Http
 @using Newtonsoft.Json
 @using ClassLibrary2.Models
 @using System.Data;
+
+<h1>Employees</h1>
 
 @if (res == null)
 {
@@ -34,33 +35,40 @@ else
             </tbody>
         </table>
     *@
-<div style="width:75%; float:right">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Employee</th>
-                <th>Dept</th>
-                <th>Emp ID</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var emp in emps)
-            {
+
+    <div style="width:25%; float:left">
+        <nav>
+            <NavLink href="https://www.nydn.com">test</NavLink>
+        </nav>
+    </div>
+
+    <div style="width:75%; float:right">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td><a href=@($"/employee/{@emp.ID}")>@emp.FullName</a></td>
-                    <td hidden="hidden">@emp.ID</td>
+                    <th>Employee</th>
+                    <th>Dept</th>
+                    <th>Emp ID</th>
+                    <th>Summary</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var emp in emps)
+                {
+                    <tr>
+                        <td><a href=@($"/employee/{@emp.ID}")>@emp.FullName</a></td>
+                        <td hidden="hidden">@emp.ID</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 <button @onclick="@EmpGet">Get Emp</button>
 <button @onclick="@EmpUpdt">Update Emp</button>
 @emp.FirstName
-<input placeholder="emp" @bind="@emp.FirstName"/>
+<input placeholder="emp" @bind="@emp.FirstName" />
 <button @onclick="() => emps?.Sort((x, y) => x.FirstName?.CompareTo(y.FirstName) ?? -1)">Sort Emps</button>
 <button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
 <button @onclick="@SortEmps"> sort 3</button>
@@ -86,7 +94,7 @@ else
             res = await Http.GetStringAsync("https://localhost:44315/api/emps");
             emps = JsonConvert.DeserializeObject<List<Emp>>(res);
             origEmps = emps;
-//            dt = JsonConvert.DeserializeObject<DataTable>(res); //this is error, doesnt work, but ok, dont need
+            //            dt = JsonConvert.DeserializeObject<DataTable>(res); //this is error, doesnt work, but ok, dont need
             Console.WriteLine(dt.Rows.Count);
         }
         catch (Exception e)
@@ -122,7 +130,7 @@ else
 
     private async Task EmpUpdt()
     {
-//        emp.FirstName = "Joe";
+        //        emp.FirstName = "Joe";
         emp.LastName = "";
         var res = JsonConvert.SerializeObject(emp);
         await Http.PutJsonAsync("https://localhost:44315/api/emps/2", res);
