@@ -45,7 +45,7 @@
     </ul>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="@ToggleNavMenu">
+<div class="@NavMenuCssClass" @onclick="@ToggleNavMenu" hidden>
     <ul class="nav flex-column">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -66,8 +66,74 @@
 </div>
 
 
+<div class="@NavMenuCssClass" @onclick="@ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        @foreach (var mi in MnuItms)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@mi.href">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> @mi.text
+                </NavLink>
+            </li>
+        }
+    </ul>
+</div>
+
+
 @code {
-    public string TestCtrl = "abc";
+        string _MnuCtrl;
+        [Parameter] public string MnuCtrl {
+            get {return _MnuCtrl; }
+            set
+            {
+                if (value == _MnuCtrl)
+                {
+                    return;
+                }
+                _MnuCtrl = value;
+                switch (_MnuCtrl)
+                {
+                case "Main":
+                    MnuItms = MainMnuItms;
+                    break;
+                case "Employees":
+                    MnuItms = EmployeesMnuItms;
+                    break;
+                case "Employee":
+                    MnuItms = EmployeeMnuItms;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public class MnuItm
+    {
+        public string href, text;
+    }
+    List<MnuItm> MnuItms = new List<MnuItm> { new MnuItm{ href = "abc", text = "123" },
+         new MnuItm{ href = "def", text = "456" }
+    };
+
+    List<MnuItm> MainMnuItms = new List<MnuItm> {
+        new MnuItm { href = "Counter", text = "Counter" },
+        new MnuItm { href = "fetchdata", text = "fetchdata" },
+        new MnuItm { href = "tst", text = "tst" },
+        new MnuItm { href = "todo", text = "todo" },
+        new MnuItm { href = "employees", text = "Employees" },
+        new MnuItm { href = "Paychecks", text = "Paychecks" }
+    };
+    List<MnuItm> EmployeesMnuItms = new List<MnuItm> { new MnuItm { href = "/", text = "Back" } };
+    List<MnuItm> EmployeeMnuItms = new List<MnuItm> { new MnuItm{ href = "/Pay", text = "Pay" },
+     new MnuItm{ href = "/Edit", text = "Edit" }};
+
+
 
     bool collapseNavMenu = true;
 
