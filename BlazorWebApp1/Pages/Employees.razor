@@ -6,6 +6,18 @@
 
 <h1>Employees</h1>
 
+<div>
+    <button @onclick="@EmpGet">Get Emp</button>
+    <button @onclick="@EmpUpdt">Update Emp</button>
+    @emp.FirstName
+    <input placeholder="emp" @bind="@emp.FirstName" />
+    <button @onclick="() => emps?.Sort((x, y) => x.FirstName?.CompareTo(y.FirstName) ?? -1)">Sort Emps</button>
+    <button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
+    <button @onclick="@SortEmps"> sort 3</button>
+    <button @onclick="@FindEmps"> Find </button>
+</div>
+
+
 @if (res == null)
 {
     <p><em>Loading...</em></p>
@@ -72,14 +84,16 @@ else
     </div>
 }
 
-<button @onclick="@EmpGet">Get Emp</button>
-<button @onclick="@EmpUpdt">Update Emp</button>
-@emp.FirstName
-<input placeholder="emp" @bind="@emp.FirstName" />
-<button @onclick="() => emps?.Sort((x, y) => x.FirstName?.CompareTo(y.FirstName) ?? -1)">Sort Emps</button>
-<button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
-<button @onclick="@SortEmps"> sort 3</button>
-<button @onclick="@FindEmps"> Find </button>
+<div>
+    <button @onclick="@EmpGet">Get Emp</button>
+    <button @onclick="@EmpUpdt">Update Emp</button>
+    @emp.FirstName
+    <input placeholder="emp" @bind="@emp.FirstName" />
+    <button @onclick="() => emps?.Sort((x, y) => x.FirstName?.CompareTo(y.FirstName) ?? -1)">Sort Emps</button>
+    <button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
+    <button @onclick="@SortEmps"> sort 3</button>
+    <button @onclick="@FindEmps"> Find </button>
+</div>
 
 @code {
     List<Emp> emps, origEmps;
