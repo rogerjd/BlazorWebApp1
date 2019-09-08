@@ -12,9 +12,10 @@
     }
 </ul>
 
-<input placeholder="Something todo" @bind="@newTodo" @onkeypress="@(e => TxtKeyPress(e))" />
-<button @onclick="@AddTodo">Add todo</button>
-<button @onclick="@RemvTodo">Remove todo</button>
+<input placeholder="Something todo" @bind="@newTodo" @onkeypress="(e => TxtKeyPress(e))" />
+<button @onclick="AddTodo">Add todo</button>
+<button onclick="RemvTodo">Remove todo</button>
+
 
 @* DynamicFragment *@
 
@@ -46,7 +47,7 @@
         }
     }
 
-    private void TxtKeyPress(UIKeyboardEventArgs args)
+    private void TxtKeyPress(Microsoft.AspNetCore.Components.Web.KeyboardEventArgs args)
     {
         if (args.Key == "Enter")
         {
