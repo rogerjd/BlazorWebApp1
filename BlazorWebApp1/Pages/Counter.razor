@@ -6,6 +6,8 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<MyComp @bind-CurrentCounterValue="currentCount"></MyComp>
+
 @code {
     int currentCount = 0;
 
