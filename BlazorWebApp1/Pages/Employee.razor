@@ -1,6 +1,8 @@
 ﻿@page "/employee/{id:int}"
+@inject HttpClient Http
+@using ClassLibrary2.Models
+@using Newtonsoft.Json
 
-<h1>Employee</h1>
 
 <div class="sidebar" style="width:25%; float:left">
     <NavMenu MnuCtrl="Employee" />
@@ -8,7 +10,38 @@
 
 <h1> Employee @ID</h1>
 
+@if (res == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @emp.FirstName @emp.LastName
+}
+
 @code{
     [Parameter]
     public int ID { get; set; }
+    string res;
+    Emp emp;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ID == -1)
+        {
+            return;
+        }
+
+        try
+        {
+            res = await Http.GetStringAsync($"https://localhost:44315/api/emps/{ID}");
+            emp = JsonConvert.DeserializeObject<Emp>(res);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        System.Diagnostics.Debug.WriteLine("after: debug test");
+    }
+
 }

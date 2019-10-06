@@ -15,6 +15,7 @@
     <button @onclick="() => emps?.OrderBy(i => i.FirstName)"> sort 2</button>
     <button @onclick="SortEmps"> sort 3</button>
     <button @onclick="FindEmps"> Find </button>
+    <a href="/employee/-1" class="btn btn-default">New Employee</a>
 </div>
 
 
@@ -169,5 +170,9 @@ Skip(30).Take(10)
     {
         emps = origEmps.FindAll(e => e.FullName.StartsWith(emp.FirstName ?? ""));
         Console.WriteLine("{0} {1}", emps.Count, origEmps.Count);
+    }
+
+    private void NewEmployee()
+    {
     }
 }
