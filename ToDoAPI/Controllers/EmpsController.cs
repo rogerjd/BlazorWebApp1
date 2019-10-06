@@ -86,9 +86,11 @@ namespace ToDoAPI.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-            PR_Mgr mgr = new PR_Mgr();
-            Emp emp = JsonConvert.DeserializeObject<Emp>(value);
-            mgr.EmpUpdate(emp);
+            using (PR_Mgr mgr = new PR_Mgr())
+            {
+                Emp emp = JsonConvert.DeserializeObject<Emp>(value);
+                mgr.EmpUpdate(emp);
+            }
         }
     }
 }
