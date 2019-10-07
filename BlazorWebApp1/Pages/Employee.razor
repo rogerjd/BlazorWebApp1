@@ -8,16 +8,23 @@
     <NavMenu MnuCtrl="Employee" />
 </div>
 
-<h1> Employee @ID</h1>
+<h1> Employee @(ID == -1? "New" : ID.ToString()) </h1>
 
-@if (res == null)
+@if (res == null && ID != -1)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    @emp.FirstName @emp.LastName
-    @emp.FullName
+    @if (ID > 0)
+    {
+        @emp.FirstName @emp.LastName
+        @emp.FullName
+    }
+    else
+    {
+        <label>New Employee</label>
+    }
 }
 
 @code{
