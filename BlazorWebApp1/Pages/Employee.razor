@@ -17,6 +17,7 @@
 else
 {
     @emp.FirstName @emp.LastName
+    @emp.FullName
 }
 
 @code{
@@ -34,8 +35,10 @@ else
 
         try
         {
+            Console.WriteLine("before");
             res = await Http.GetStringAsync($"https://localhost:44315/api/emps/{ID}");
-            emp = JsonConvert.DeserializeObject<Emp>(res);
+            Console.WriteLine(res);
+            emp = JsonConvert.DeserializeObject<List<Emp>>(res)[0];
         }
         catch (Exception e)
         {
