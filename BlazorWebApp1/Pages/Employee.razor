@@ -8,7 +8,7 @@
     <NavMenu MnuCtrl="Employee" />
 </div>
 
-<h1> Employee @(ID == -1? "New" : ID.ToString()) </h1>
+<h1> Employee @(ID == -1? "New" : "Edit") </h1>
 
 @if (res == null && ID != -1)
 {
