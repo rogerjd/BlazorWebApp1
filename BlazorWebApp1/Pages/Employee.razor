@@ -8,7 +8,7 @@
     <NavMenu MnuCtrl="Employee" />
 </div>
 
-<h1> Employee @(ID == -1? "New" : "Edit") </h1>
+<h1> Employee @(ID == -1 ? "New" : "Edit") </h1>
 
 @if (res == null && ID != -1)
 {
@@ -25,6 +25,9 @@ else
     {
         <label>New Employee</label>
     }
+
+    <br />
+    <input placeholder="First Name" @bind="@emp.FirstName" />
 }
 
 @code{
