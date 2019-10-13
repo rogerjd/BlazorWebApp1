@@ -35,7 +35,8 @@ else
         <input id="LastName" placeholder="Last Name" @bind="@emp.LastName" />
         <label for="LastName" accesskey="f"><u>L</u>ast Name</label>
     </fieldset>
-
+    
+    <button @onclick="@EmpUpdt">Update Emp</button>
 }
 
 @code{
@@ -74,11 +75,12 @@ else
     // Post if EmpID = 0, it is new emp
     private async Task EmpUpdt()
     {
+        Console.WriteLine("Updt" + ID.ToString());
         //        emp.FirstName = "Joe";
         //emp.ID = 6002; //id should be 0, or ID
         var res = JsonConvert.SerializeObject(emp);
         if (ID > 0)
-            await Http.PutJsonAsync("https://localhost:44315/api/emps/2", res);
+            await Http.PutJsonAsync($"https://localhost:44315/api/emps/{ID}", res);
         else
             await Http.PostJsonAsync("https://localhost:44315/api/emps/0", res);
     }

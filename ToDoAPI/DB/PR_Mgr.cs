@@ -10,7 +10,7 @@ using ClassLibrary2.Models;
 
 namespace ToDoAPI.DB
 {
-    public class PR_Mgr: IDisposable
+    public class PR_Mgr : IDisposable
     {
         string connStr;
         SqlConnection sqlConnection;
@@ -60,12 +60,18 @@ namespace ToDoAPI.DB
             return dt;
         }
 
+        private SqlCommand CreateCommand(string CmdName)
+        {
+            SqlCommand cmd = new SqlCommand(CmdName, sqlConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            return cmd;
+        }
+
         public int EmpUpdate(Emp emp)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("EmpUpdate", sqlConnection);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = CreateCommand("EmpUpdate");
                 cmd.Parameters.AddWithValue("ID", emp.ID);
                 cmd.Parameters.AddWithValue("FirstName", emp.FirstName);
                 cmd.Parameters.AddWithValue("LastName", emp.LastName);
@@ -81,6 +87,16 @@ namespace ToDoAPI.DB
                 //sqlConnection.Close();
             }
         }
+
+        public int EmpInsert(Emp emp)
+        {
+            SqlCommand cmd = CreateCommand("EmpInsert");
+            cmd.Parameters.AddWithValue("FirstName", emp.FirstName);
+            cmd.Parameters.AddWithValue("LastName", emp.LastName);
+            var n = cmd.ExecuteNonQuery();
+            return n;
+        }
+
 
         public void Dispose()
         {
