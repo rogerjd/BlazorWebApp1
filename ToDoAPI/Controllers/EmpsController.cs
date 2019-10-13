@@ -83,6 +83,7 @@ namespace ToDoAPI.Controllers
         //}
 
         // PUT api/emps/5
+        // if id = 0, new emp, but then should use POST
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

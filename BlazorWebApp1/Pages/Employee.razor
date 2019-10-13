@@ -10,7 +10,7 @@
 
 <h1> Employee @(ID == -1 ? "New" : "Edit") </h1>
 
-@if (res == null && ID != -1)
+@if (res == null && ID != 0)
 {
     <p><em>Loading...</em></p>
 }
@@ -27,8 +27,15 @@ else
     }
 
     <br />
-    <label for="FirstName" accesskey="f" ><u>F</u>irst Name</label>
-    <input id="FirstName" placeholder="First Name" @bind="@emp.FirstName" />
+    <fieldset>
+        <legend>Fruit juice size</legend>
+        <input id="FirstName" placeholder="First Name" @bind="@emp.FirstName" @onclick="@debug" />
+        <label for="FirstName" accesskey="f"><u>F</u>irst Name</label>
+
+        <input id="LastName" placeholder="Last Name" @bind="@emp.LastName" />
+        <label for="LastName" accesskey="f"><u>L</u>ast Name</label>
+    </fieldset>
+
 }
 
 @code{
@@ -37,10 +44,16 @@ else
     string res;
     Emp emp;
 
+    private void debug()
+    {
+        Console.WriteLine(emp.FirstName);
+    }
+
     protected override async Task OnInitializedAsync()
     {
-        if (ID == -1)
+        if (ID == 0) //or 0
         {
+            emp = new Emp();
             return;
         }
 
@@ -56,6 +69,18 @@ else
             Console.WriteLine(e.Message);
         }
         System.Diagnostics.Debug.WriteLine("after: debug test");
+    }
+
+    // Post if EmpID = 0, it is new emp
+    private async Task EmpUpdt()
+    {
+        //        emp.FirstName = "Joe";
+        //emp.ID = 6002; //id should be 0, or ID
+        var res = JsonConvert.SerializeObject(emp);
+        if (ID > 0)
+            await Http.PutJsonAsync("https://localhost:44315/api/emps/2", res);
+        else
+            await Http.PostJsonAsync("https://localhost:44315/api/emps/0", res);
     }
 
 }
