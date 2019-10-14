@@ -105,6 +105,7 @@ namespace ToDoAPI.Controllers
                 Emp emp = JsonConvert.DeserializeObject<Emp>(value);
                 mgr.EmpInsert(emp);
             }
+            //todo: should something be returned? CreatedAtAction and for Put
             /*
             _context.ToDoItems.Add(item);
             await _context.SaveChangesAsync();
