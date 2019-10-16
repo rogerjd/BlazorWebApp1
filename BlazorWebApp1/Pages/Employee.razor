@@ -8,7 +8,7 @@
     <NavMenu MnuCtrl="Employee" />
 </div>
 
-<h1> Employee @(ID == -1 ? "New" : "Edit") </h1>
+<h1> Employee @(ID == 0 ? "New" : "Edit") </h1>
 
 @if (res == null && ID != 0)
 {
@@ -36,7 +36,7 @@ else
         <label for="LastName" accesskey="f"><u>L</u>ast Name</label>
     </fieldset>
     
-    <button @onclick="@EmpUpdt">Update Emp</button>
+    <button @onclick="@EmpUpdt">@(ID == 0 ? "Add" : "Update") Employee</button>
 }
 
 @code{
