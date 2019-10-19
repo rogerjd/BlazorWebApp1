@@ -67,7 +67,7 @@ namespace ToDoAPI.DB
             return cmd;
         }
 
-        public int EmpUpdate(Emp emp)
+        public async Task<int> EmpUpdate(Emp emp)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace ToDoAPI.DB
                 cmd.Parameters.AddWithValue("ID", emp.ID);
                 cmd.Parameters.AddWithValue("FirstName", emp.FirstName);
                 cmd.Parameters.AddWithValue("LastName", emp.LastName);
-                var n = cmd.ExecuteNonQuery();
+                var n = await cmd.ExecuteNonQueryAsync();
                 return n;
             }
             catch (Exception)

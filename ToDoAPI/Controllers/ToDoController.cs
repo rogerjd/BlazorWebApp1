@@ -46,6 +46,8 @@ namespace ToDoAPI.Controllers
         [HttpGet("count")]
         public ActionResult<int> GetCount()
         {
+            var x = 0;
+            var n = 3 / x;
             return 4;
         }
 

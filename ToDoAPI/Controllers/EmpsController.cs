@@ -86,14 +86,15 @@ namespace ToDoAPI.Controllers
         // if id = 0, new emp, but then should use POST
         //why have id?, it is in emp
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] string value)
         {
             //todo: chk if modified? here?
             using (PR_Mgr mgr = new PR_Mgr())
             {
                 Emp emp = JsonConvert.DeserializeObject<Emp>(value);
-                mgr.EmpUpdate(emp);
+                await mgr.EmpUpdate(emp);
             }
+            return NoContent();
         }
 
         //dont really need id (it is in emp). if remvg, also do caller
