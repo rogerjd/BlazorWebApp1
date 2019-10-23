@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Models;
+using Newtonsoft.Json;
 
 namespace ToDoAPI.Controllers
 {
@@ -46,17 +47,22 @@ namespace ToDoAPI.Controllers
         [HttpGet("count")]
         public ActionResult<int> GetCount()
         {
-            var x = 0;
-            var n = 3 / x;
+            //var x = 0;
+            //var n = 3 / x;
             return 4;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> PostTodoItem(ToDoItem item)
+        public async Task<ActionResult<ToDoItem>> PostTodoItem([FromBody] string val)     //(ToDoItem item)
         {
+            ToDoItem td = JsonConvert.DeserializeObject<ToDoItem>(val);
+            return null;
+
+            /*
             _context.ToDoItems.Add(item);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTodoItem), new { id = item.id }, item);
+            */
         }
 
         [HttpPut("{id}")]

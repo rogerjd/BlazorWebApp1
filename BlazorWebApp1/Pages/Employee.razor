@@ -1,4 +1,4 @@
-﻿    @page "/employee/{id:int}"
+﻿@page "/employee/{id:int}"
 @inject HttpClient Http
 @using ClassLibrary2.Models
 @using Newtonsoft.Json
@@ -35,7 +35,7 @@ else
         <input id="LastName" placeholder="Last Name" @bind="@emp.LastName" />
         <label for="LastName" accesskey="f"><u>L</u>ast Name</label>
     </fieldset>
-    
+
     <button @onclick="@EmpUpdt">@(ID == 0 ? "Add" : "Update") Employee</button>
 }
 
@@ -75,12 +75,21 @@ else
     // Post if EmpID = 0, it is new emp
     private async Task EmpUpdt()
     {
+        TodoItem td = new TodoItem{Title = "test123", IsDone = false};  
+        //var itm = "{\"id\": 2,\"Name\": \"dog walk 2\",\"IsComplete\": true}";
+        HttpClient hc = new HttpClient();
+        var res2 = JsonConvert.SerializeObject(td);
+        Console.WriteLine(res2);
+        await Http.PostJsonAsync(" https://localhost:44315/api/todo/", res2);
+        return;
         Console.WriteLine("Updt" + ID.ToString());
         //        emp.FirstName = "Joe";
         //emp.ID = 6002; //id should be 0, or ID
+        HttpResponseMessage msg;
         var res = JsonConvert.SerializeObject(emp);
         if (ID > 0)
-            await Http.PutJsonAsync($"https://localhost:44315/api/emps/{ID}", res);
+            //await Http.PutJsonAsync($"https://localhost:44315/api/emps/{ID}", res);
+            msg = await Http.PutJsonAsync<HttpResponseMessage>($"https://localhost:44315/api/emps/{ID}", res);
         else
             await Http.PostJsonAsync("https://localhost:44315/api/emps/0", res);
     }
