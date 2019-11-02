@@ -4,6 +4,7 @@
 @using Newtonsoft.Json
 
 
+
 <div class="sidebar" style="width:25%; float:left">
     <NavMenu MnuCtrl="Employee" />
 </div>
@@ -75,12 +76,13 @@ else
     // Post if EmpID = 0, it is new emp
     private async Task EmpUpdt()
     {
-        TodoItem td = new TodoItem{Title = "test123", IsDone = false};  
+        TodoItem td = new TodoItem{Name = "test123", IsComplete = false};  
         //var itm = "{\"id\": 2,\"Name\": \"dog walk 2\",\"IsComplete\": true}";
         HttpClient hc = new HttpClient();
         var res2 = JsonConvert.SerializeObject(td);
         Console.WriteLine(res2);
-        await Http.PostJsonAsync(" https://localhost:44315/api/todo/", res2);
+        var resp = await Http.PostJsonAsync<HttpResponseMessage>(" https://localhost:44315/api/todo/", res2);
+        Console.WriteLine(resp.StatusCode.ToString());
         return;
         Console.WriteLine("Updt" + ID.ToString());
         //        emp.FirstName = "Joe";

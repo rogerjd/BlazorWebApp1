@@ -55,6 +55,7 @@ namespace ToDoAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ToDoItem>> PostTodoItem([FromBody] string val)     //(ToDoItem item)
         {
+            Console.WriteLine("PostTodoItem");
             ToDoItem td = JsonConvert.DeserializeObject<ToDoItem>(val);
             return null;
 
