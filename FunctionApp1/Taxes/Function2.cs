@@ -26,7 +26,7 @@ namespace FunctionApp1.Taxes
             name = name ?? data?.name;
 
             return name != null
-                ? (ActionResult)new OkObjectResult("73.11")
+                ? (ActionResult)new JsonResult(  OkObjectResult("73.11")
                 : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
         }
     }
