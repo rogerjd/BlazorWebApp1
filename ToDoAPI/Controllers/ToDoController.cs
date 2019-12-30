@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Models;
+using ClassLibrary2.Models;
 using Newtonsoft.Json;
 
 namespace ToDoAPI.Controllers
@@ -21,19 +22,19 @@ namespace ToDoAPI.Controllers
 
             if (_context.ToDoItems.Count() == 0)
             {
-                _context.ToDoItems.Add(new ToDoItem { Name = "Item1" });
+                _context.ToDoItems.Add(new TodoItem { Title = "Item1" });
                 _context.SaveChanges();
             }
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToDoItem>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
             return await _context.ToDoItems.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ToDoItem>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
             var todoItem = await _context.ToDoItems.FindAsync(id);
             if (todoItem == null)
@@ -53,11 +54,12 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> PostTodoItem([FromBody] string val)     //(ToDoItem item)
+        public CreatedAtActionResult PostTodoItem([FromBody] string val)     //(ToDoItem item)
         {
             Console.WriteLine("PostTodoItem");
-            ToDoItem td = JsonConvert.DeserializeObject<ToDoItem>(val);
-            return null;
+            TodoItem td = JsonConvert.DeserializeObject<TodoItem>(val);
+            return CreatedAtAction(nameof(GetTodoItem), td);
+            //return null; causes error?
 
             /*
             _context.ToDoItems.Add(item);
@@ -67,7 +69,7 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, ToDoItem item)
+        public async Task<IActionResult> PutTodoItem(long id, TodoItem item)
         {
             if (id != item.id)
             {

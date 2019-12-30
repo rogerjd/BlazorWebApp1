@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BlazorWebApp1
 {
-    public class TodoItem
+    public class TodoItemBKP
     {
         public string Title { get; set; }
         public bool IsDone { get; set; }
